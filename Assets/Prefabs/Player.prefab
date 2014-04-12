@@ -12,6 +12,7 @@ GameObject:
   - 50: {fileID: 5000000}
   - 61: {fileID: 6100000}
   - 114: {fileID: 11400000}
+  - 58: {fileID: 5800000}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -45,8 +46,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.50108421, y: -.511733234, z: -1}
-  m_LocalScale: {x: .0799999982, y: .0799999982, z: 1}
+  m_LocalPosition: {x: 19.6690159, y: 13.0785341, z: -1}
+  m_LocalScale: {x: .0599999987, y: .0599999987, z: 1}
   m_Children:
   - {fileID: 400002}
   m_Father: {fileID: 0}
@@ -105,8 +106,8 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
---- !u!61 &6100000
-BoxCollider2D:
+--- !u!58 &5800000
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -114,7 +115,18 @@ BoxCollider2D:
   m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Size: {x: 10, y: 10}
+  m_Radius: 5
+  m_Center: {x: 0, y: 0}
+--- !u!61 &6100000
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 0
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Size: {x: 8, y: 8}
   m_Center: {x: 0, y: 0}
 --- !u!81 &8100000
 AudioListener:
@@ -141,7 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8ba8e78607acd3478418306df454287, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: 10, y: 10}
+  speed: {x: 4, y: 4}
+  turnSmoothing: 15
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
