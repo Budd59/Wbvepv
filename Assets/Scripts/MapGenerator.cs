@@ -122,22 +122,12 @@ public class MapGenerator : MonoBehaviour
 	}
 
 	private void GenerateStartAndFinish() {
-		while (true) {
-			int randomindex = Random.Range(0, grid.Count-1);
-			if ( grid[randomindex] == ROOMCENTER )
-			{
-				grid[randomindex] = START;
-				break;
-			}
-		}
-		while (true) {
-			int randomindex = Random.Range(0, grid.Count-1);
-			if ( grid[randomindex] == ROOMCENTER )
-			{
-				grid[randomindex] = FINISH;
-				break;
-			}
-		}
+
+			int startindex = Random.Range(1, width - 1);
+			grid[startindex] = START;
+
+			int finishindex = Random.Range(1 + (height - 1) * width, grid.Count-2);
+			grid[finishindex] = FINISH;
 	}
 
 	private void ConstructMap ()
