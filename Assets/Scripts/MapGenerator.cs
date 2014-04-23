@@ -23,13 +23,14 @@ public class MapGenerator : MonoBehaviour
 	private int FINISH = 5;
 
 	private List<int> grid = new List<int>();
+	private List<int> tempGrid = new List<int>();
 
 	void Awake()
 	{
 		InitMap(height, width);
 		GenerateMaze();
-		GenerateRooms();
 		GenerateStartAndFinish();
+		GenerateRooms();
 		ConstructMap();
 		SpawnPlayer();
 	}
@@ -41,6 +42,7 @@ public class MapGenerator : MonoBehaviour
 			for(int x=0; x < width; x++)
 			{
 				grid.Add(WALL);
+				tempGrid.Add(x+y*width);
 			}
 		}
 	}
@@ -95,39 +97,67 @@ public class MapGenerator : MonoBehaviour
 		} while(walllist.Count > 0);
 	}
 
+	private void GenerateStartAndFinish()
+	{
+		int startindex = Random.Range(1, width - 1);
+		grid[startindex] = START;
+		GenerateRoom (startindex);
+
+		int finishindex = Random.Range(1 + (height - 1) * width, width * height - 2);
+		grid[finishindex] = FINISH;
+		GenerateRoom (finishindex);
+	}
+
+	private void GenerateRoom(int index)
+	{
+		foreach (int subindex in GetNeighbours (GetXFromIndex(index), GetYFromIndex(index)))
+		{
+			foreach (int subsubindex in GetNeighbours (GetXFromIndex(subindex), GetYFromIndex(subindex)))
+			{
+				foreach (int subsubsubindex in GetNeighbours (GetXFromIndex(subsubindex), GetYFromIndex(subsubindex)))
+				{
+					tempGrid[subsubsubindex] = -1;
+				}
+				tempGrid[subsubindex] = -1;
+			}
+			grid[subindex]=ROOM;
+			tempGrid[subindex] = -1;
+		}
+		tempGrid[index] = -1;
+	}
+
 	private void GenerateRooms ()
 	{
 		// Création d'une liste de centre de salle
-		List<int> roomlist = new List<int>();
-		for (int i = 0; i < roomnumber; i++)
-		{
-			int roomindex = Random.Range(0, grid.Count-1);
-			roomlist.Add(roomindex);
-			grid[roomindex] = ROOMCENTER;
-		}
+		//List<int> roomlist = new List<int>();
+		//for (int i = 0; i < roomnumber; i++)
+		//{
+		//	int roomindex = Random.Range(0, grid.Count-1);
+		//	roomlist.Add(roomindex);
+		//	grid[roomindex] = ROOMCENTER;
+		//}
 
 		// Création de la salle
-		foreach (int roomcenter in roomlist)
+		//foreach (int roomcenter in roomlist)
+		//{
+		//	int cellx = GetXFromIndex(roomcenter);
+		//	int celly = GetYFromIndex(roomcenter);
+		//	foreach (int neighbourindex in GetNeighbours(cellx, celly))
+		//	{
+		//		if (IsCellInMap(GetXFromIndex(neighbourindex),GetXFromIndex(neighbourindex)))
+		//		{
+		//			grid[neighbourindex] = ROOM;
+		//		}
+		//	}
+		//}
+
+		while (tempGrid.Exists(i => i > -1))
 		{
-			int cellx = GetXFromIndex(roomcenter);
-			int celly = GetYFromIndex(roomcenter);
-			foreach (int neighbourindex in GetNeighbours(cellx, celly))
-			{
-				if (IsCellInMap(GetXFromIndex(neighbourindex),GetXFromIndex(neighbourindex)))
-				{
-					grid[neighbourindex] = ROOM;
-				}
-			}
+			List<int> list = tempGrid.FindAll(i => i > -1);
+			int roomindex = list[Random.Range(0, list.Count-1)];
+			grid[roomindex] = ROOMCENTER;
+			GenerateRoom(roomindex);
 		}
-	}
-
-	private void GenerateStartAndFinish() {
-
-			int startindex = Random.Range(1, width - 1);
-			grid[startindex] = START;
-
-			int finishindex = Random.Range(1 + (height - 1) * width, grid.Count-2);
-			grid[finishindex] = FINISH;
 	}
 
 	private void ConstructMap ()
@@ -193,7 +223,7 @@ public class MapGenerator : MonoBehaviour
 			}
 		}
 	}
-		
+
 	private bool IsCellInMap(int x, int y)
 	{
 		return x >= 0 && x < width && y >= 0 && y < height;
