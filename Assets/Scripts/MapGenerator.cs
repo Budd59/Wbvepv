@@ -147,38 +147,48 @@ public class MapGenerator : MonoBehaviour
 			int cell = grid[cellindex];
 			if(cell == WALL)
 			{
-				Instantiate(wallprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, -1), Quaternion.identity);
+				Transform newwall = Instantiate(wallprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, -1), Quaternion.identity) as Transform;
+				newwall.transform.parent = gameObject.transform;
 			}
 			else if (cell == CORRIDOR)
 			{
-				Instantiate(groundprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity);
+				Transform newcorridor = Instantiate(groundprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity) as Transform;
+				newcorridor.transform.parent = gameObject.transform;
 			}
 			else if (cell == ROOM)
 			{
-				Instantiate(groundprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity);
+				Transform newroom = Instantiate(groundprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity) as Transform;
+				newroom.transform.parent = gameObject.transform;
 			}
 			else if (cell == ROOMCENTER)
 			{
-				Instantiate(groundprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity);
+				Transform newroomcenter = Instantiate(groundprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity) as Transform;
+				newroomcenter.transform.parent = gameObject.transform;
 			}
 			else if (cell == START)
 			{
-				Instantiate(startprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity);
+				Transform newstart = Instantiate(startprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity) as Transform;
+				newstart.transform.parent = gameObject.transform;
 			}
 			else if (cell == FINISH)
 			{
-				Instantiate(finishprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity);
+				Transform newfinish = Instantiate(finishprefab, new Vector3(GetXFromIndex(cellindex)+1, GetYFromIndex(cellindex)+1, 0), Quaternion.identity) as Transform;
+				newfinish.transform.parent = gameObject.transform;
 			}
 		}
 		for (int x=0; x<=width+1; x++)
 		{
-			Instantiate(borderprefab, new Vector3(x, 0, -1), Quaternion.identity);
-			Instantiate(borderprefab, new Vector3(x, height+1, -1), Quaternion.identity);
+			Transform newborder1 = Instantiate(borderprefab, new Vector3(x, 0, -1), Quaternion.identity) as Transform;
+			newborder1.transform.parent = gameObject.transform;
+			Transform newborder2 = Instantiate(borderprefab, new Vector3(x, height+1, -1), Quaternion.identity) as Transform;
+			newborder2.transform.parent = gameObject.transform;
 		}
 		for (int y=1; y<=height+1; y++)
 		{
-			Instantiate(borderprefab, new Vector3(0, y, 0), Quaternion.identity);
-			Instantiate(borderprefab, new Vector3(width+1, y, -1), Quaternion.identity);
+			Transform newborder3 = Instantiate(borderprefab, new Vector3(0, y, 0), Quaternion.identity) as Transform;
+			newborder3.transform.parent = gameObject.transform;
+			Transform newborder4 = Instantiate(borderprefab, new Vector3(width+1, y, -1), Quaternion.identity) as Transform;
+			newborder4.transform.parent = gameObject.transform;
 		}
 	}
 
