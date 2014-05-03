@@ -21,8 +21,8 @@ public class PlayerMove : MonoBehaviour
 		float inputY = Input.GetAxis("Vertical");
 
 		MovementManagement (inputX, inputY);
-		// 5 - Rotation
-		//transform.rotation.z =  Mathf.Cos(inputX / Mathf.Abs (inputX) * Mathf.PI + inputY / Mathf.Abs (inputY) * Mathf.PI / 2);
+
+
 	}
 
 	void MovementManagement(float horizontal, float vertical)
@@ -31,11 +31,16 @@ public class PlayerMove : MonoBehaviour
 		{
 			movement = new Vector2(speed.x * horizontal, speed.y * vertical);
 		}
+
+		if (horizontal == 0f && vertical == 0f)
+		{
+			movement = new Vector2(0 , 0);
+		}
 	}
 	
 	void FixedUpdate()
 	{
-		// 5 - Move the game object
+
 		rigidbody2D.velocity = movement;
 	}
 }
