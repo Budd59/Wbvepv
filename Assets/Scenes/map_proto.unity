@@ -108,7 +108,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 2142152930}
-  - 114: {fileID: 2142152931}
+  - 114: {fileID: 2142152929}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -116,6 +116,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &2142152929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2142152928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afed709fb7f3f634da53f9f6f1747f79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 30
+  width: 30
+  maxNumberOfRooms: 10
+  lissage: 3
+  wallprefab: {fileID: 400000, guid: 735a7dbca2972be4397148c7ae96f650, type: 2}
+  borderprefab: {fileID: 400000, guid: 2a8e7d6eb41e21b478915515a8c583e7, type: 2}
+  groundprefab: {fileID: 400000, guid: 26654f8f74d56f646948861c6b592d9b, type: 2}
+  startprefab: {fileID: 400000, guid: 604fe7a72598c49409c711c0255606c5, type: 2}
+  finishprefab: {fileID: 400000, guid: 72112fa25a6a58447a5ba564695c7fc0, type: 2}
+  playerprefab: {fileID: 400000, guid: ddb451e103330a54eb4bf55212c8b9cb, type: 2}
+  grid: 
 --- !u!4 &2142152930
 Transform:
   m_ObjectHideFlags: 0
@@ -127,24 +149,3 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
---- !u!114 &2142152931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2142152928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d9128ed3f182542826bf2c37bff1db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  height: 30
-  width: 30
-  numberMaxRooms: 10
-  lissage: 2
-  wallprefab: {fileID: 400000, guid: 735a7dbca2972be4397148c7ae96f650, type: 2}
-  borderprefab: {fileID: 400000, guid: 2a8e7d6eb41e21b478915515a8c583e7, type: 2}
-  groundprefab: {fileID: 400000, guid: 26654f8f74d56f646948861c6b592d9b, type: 2}
-  startprefab: {fileID: 400000, guid: 604fe7a72598c49409c711c0255606c5, type: 2}
-  finishprefab: {fileID: 400000, guid: 72112fa25a6a58447a5ba564695c7fc0, type: 2}
-  playerprefab: {fileID: 400000, guid: ddb451e103330a54eb4bf55212c8b9cb, type: 2}
