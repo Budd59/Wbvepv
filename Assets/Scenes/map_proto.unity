@@ -136,7 +136,7 @@ MonoBehaviour:
   groundprefab: {fileID: 400000, guid: 26654f8f74d56f646948861c6b592d9b, type: 2}
   startprefab: {fileID: 400000, guid: 604fe7a72598c49409c711c0255606c5, type: 2}
   finishprefab: {fileID: 400000, guid: 72112fa25a6a58447a5ba564695c7fc0, type: 2}
-  playerprefab: {fileID: 400000, guid: ddb451e103330a54eb4bf55212c8b9cb, type: 2}
+  playerprefab: {fileID: 400000, guid: 47385e3bd8e629044b8bbe2ee5b6e070, type: 2}
   grid: 
 --- !u!4 &2142152930
 Transform:

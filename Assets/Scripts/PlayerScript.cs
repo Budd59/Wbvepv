@@ -3,13 +3,16 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
 
-	public int type; // type du personnage ?
+	public int character; // type du personnage ?
 
 	public int health;
-	public int movementspeed;
+	public int maxHealth;
+	public int movementSpeed;
 	public int range;
 	public int damage;
-	public int attackspeed;
+	public int attackSpeed;
+
+	public int hasheart = 0; // 0 à l'aller, 1 au retour
 
 
 	// Use this for initialization
@@ -22,9 +25,9 @@ public class PlayerScript : MonoBehaviour {
 	
 	}
 
-	void OnDestroy()
+/*	void OnDestroy()
 	{
 		// Game Over.
 		transform.parent.gameObject.AddComponent<GameOverScript>();
-	}
+	}*/
 }
