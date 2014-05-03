@@ -5,7 +5,8 @@ public class MapGenerator : MonoBehaviour
 {
 	public int height;
 	public int width;
-	public int roomnumber;
+	public int numberMaxRooms;
+	public int lissage;
 
 	public Transform wallprefab;
 	public Transform borderprefab;
@@ -31,6 +32,7 @@ public class MapGenerator : MonoBehaviour
 		GenerateMaze();
 		GenerateStartAndFinish();
 		GenerateRooms();
+		Lissage(lissage);
 		ConstructMap();
 		SpawnPlayer();
 	}
@@ -112,52 +114,101 @@ public class MapGenerator : MonoBehaviour
 	{
 		foreach (int subindex in GetNeighbours (GetXFromIndex(index), GetYFromIndex(index)))
 		{
-			foreach (int subsubindex in GetNeighbours (GetXFromIndex(subindex), GetYFromIndex(subindex)))
-			{
-				foreach (int subsubsubindex in GetNeighbours (GetXFromIndex(subsubindex), GetYFromIndex(subsubindex)))
-				{
-					tempGrid[subsubsubindex] = -1;
-				}
-				tempGrid[subsubindex] = -1;
-			}
 			grid[subindex]=ROOM;
 			tempGrid[subindex] = -1;
+			GenerateRoomWalls(3, subindex);
 		}
-		tempGrid[index] = -1;
+	}
+
+	private void GenerateRoomWalls(int level, int index)
+	{
+		foreach (int subindex in GetNeighbours (GetXFromIndex(index), GetYFromIndex(index)))
+		{
+			tempGrid[subindex] = -1;
+			if (level > 0)
+			{
+				GenerateRoomWalls(level-1, subindex);
+			}
+		}
 	}
 
 	private void GenerateRooms ()
 	{
-		// Création d'une liste de centre de salle
-		//List<int> roomlist = new List<int>();
-		//for (int i = 0; i < roomnumber; i++)
-		//{
-		//	int roomindex = Random.Range(0, grid.Count-1);
-		//	roomlist.Add(roomindex);
-		//	grid[roomindex] = ROOMCENTER;
-		//}
-
-		// Création de la salle
-		//foreach (int roomcenter in roomlist)
-		//{
-		//	int cellx = GetXFromIndex(roomcenter);
-		//	int celly = GetYFromIndex(roomcenter);
-		//	foreach (int neighbourindex in GetNeighbours(cellx, celly))
-		//	{
-		//		if (IsCellInMap(GetXFromIndex(neighbourindex),GetXFromIndex(neighbourindex)))
-		//		{
-		//			grid[neighbourindex] = ROOM;
-		//		}
-		//	}
-		//}
-
-		while (tempGrid.Exists(i => i > -1))
+		int numberRooms = 0;
+		while (tempGrid.Exists(i => i > -1) && numberRooms < numberMaxRooms)
 		{
 			List<int> list = tempGrid.FindAll(i => i > -1);
 			int roomindex = list[Random.Range(0, list.Count-1)];
 			grid[roomindex] = ROOMCENTER;
+			tempGrid[roomindex] = -1;
 			GenerateRoom(roomindex);
+			numberRooms++;
 		}
+	}
+
+	private void Lissage(int level)
+	{
+		if (level <= 0) {
+			return;
+		}
+
+		List<int> forLissage = new List<int>();
+		for(int index=0; index<grid.Count; index++)
+		{
+			if (isAWallOrBorder(GetXFromIndex(index), GetYFromIndex(index)))
+			{
+				continue;
+			}
+			if (findCellForLissage(index) >= 3)
+			{
+				forLissage.Add(index);
+			}
+		}
+
+		foreach (int index in forLissage)
+		{
+			grid[index] = WALL;
+		}
+
+		Lissage(level-1);
+	}
+
+	private int findCellForLissage(int index)
+	{
+		int counter = 0;
+		if (isAWallOrBorder (GetXFromIndex (index) - 1, GetYFromIndex (index)))
+		{
+			counter = counter + 1;
+		}
+		if (isAWallOrBorder (GetXFromIndex (index) + 1, GetYFromIndex (index)))
+		{
+			counter = counter + 1;
+		}
+		if (isAWallOrBorder (GetXFromIndex (index), GetYFromIndex (index) - 1))
+		{
+			counter = counter + 1;
+		}
+		if (isAWallOrBorder (GetXFromIndex (index), GetYFromIndex (index) + 1))
+		{
+			counter = counter + 1;
+		}
+		return counter;
+	}
+
+	private bool isAWallOrBorder(int x, int y)
+	{
+		if (IsCellInMap(x,y))
+		{
+			if (grid[GetIndexFromXY(x,y)] == WALL)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private void ConstructMap ()
